@@ -70,6 +70,7 @@ def toJson(obj):
 #     name: "starpotterdunewars",
 #   },
 # }
+# For more details, checkout: https://docs.cord.com/get-started/integration-guide/create-an-auth-token
 def get_client_auth_token(app_id: str, secret: str, payload: json):
     return jwt.encode(
         payload = { 
