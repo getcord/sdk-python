@@ -48,6 +48,28 @@ def toJson(obj):
                       indent=4,
                       allow_nan=False)
 
+# payload: {
+#   # The user ID can be any identifier that makes sense to your application.
+#   # As long as it's unique per-user, Cord can use it to represent your user.
+#   user_id: 'severusatreides',
+
+#   # Same as above. An organization ID can be any unique string. Organizations
+#   # are groups of users.
+#   organization_id: 'starpotterdunewars',
+
+#   # By supplying the  `user_details` object, you can create the user in
+#   # Cord's backend on-the-fly. No need to pre-sync your users.
+#   user_details: {
+#     email: 'sevvy@arrakis.spice',
+#     name: 'Severus Atreides',
+#   },
+
+#   # By supplying the `organization_details` object, just like the user,
+#   # Cord will create the organization on-the-fly.
+#   organization_details: {
+#     name: "starpotterdunewars",
+#   },
+# }
 def get_client_auth_token(app_id: str, secret: str, payload: json):
     return jwt.encode(
         payload = { 
