@@ -44,9 +44,13 @@ class clientPlatformOrganizationVariables:
         self.members = members
 
 def toJson(obj):
-    return json.dumps(obj, default=lambda o: dict((key, value) for key, value in o.__dict__.items() if value),
-                      indent=4,
-                      allow_nan=False)
+    return json.dumps(
+        obj, default=lambda o: dict(
+            (key, value) for key, value in o.__dict__.items() if value
+        ),
+        indent=4,
+        allow_nan=False,
+    )
 
 # payload: {
 #   # The user ID can be any identifier that makes sense to your application.
