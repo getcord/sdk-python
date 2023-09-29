@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.pypirc
 
 # C extensions
 *.so
@@ -45,3 +46,6 @@ ENV/
 env.bak/
 venv.bak/
 .DS_Store
+
+# vs code
+.vscode

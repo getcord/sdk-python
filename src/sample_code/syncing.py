@@ -2,7 +2,7 @@ from enum import Enum
 import json
 import requests
 
-from server.server import get_server_auth_token
+from src.sdk.server import get_server_auth_token
 
 CORD_ENDPOINT = "https://api.cord.com/v1/"
 
