@@ -6,6 +6,10 @@ from src.sdk.server import get_server_auth_token
 
 CORD_ENDPOINT = "https://api.cord.com/v1/"
 
+# This file includes code samples for syncing
+# users and organizations with Cord.
+# Take a look at: https://docs.cord.com/rest-apis
+# for all our available REST APIs
 
 class status(Enum):
     ACTIVE = "active"
