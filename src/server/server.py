@@ -1,6 +1,8 @@
 import datetime
-import json
 import jwt
+
+
+from src.types.types import ClientAuthTokenData
 
 # payload: {
 #   # The user ID can be any identifier that makes sense to your application.
@@ -27,7 +29,7 @@ import jwt
 # For more details, checkout: https://docs.cord.com/get-started/integration-guide/create-an-auth-token
 
 
-def get_client_auth_token(app_id: str, secret: str, payload: json):
+def get_client_auth_token(app_id: str, secret: str, payload: ClientAuthTokenData):
     return jwt.encode(
         payload={
             "app_id": app_id,

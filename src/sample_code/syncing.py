@@ -1,8 +1,8 @@
-from enum import Enum
 import json
 import requests
 
-from src.sdk.server import get_server_auth_token
+from src.server.server import get_server_auth_token
+from src.types.types import PlatformUserVariables, PlatformOrganizationVariables
 
 CORD_ENDPOINT = "https://api.cord.com/v1/"
 
@@ -10,46 +10,6 @@ CORD_ENDPOINT = "https://api.cord.com/v1/"
 # users and organizations with Cord.
 # Take a look at: https://docs.cord.com/rest-apis
 # for all our available REST APIs
-
-class status(Enum):
-    ACTIVE = "active"
-    DELETED = "deleted"
-
-
-class platformUserVariables:
-    def __init__(self, email: str, name: str = None, status: status = None, profile_picture_url: str = None, first_name: str = None, last_name: str = None):
-        self.email = email
-        self.name = name
-        self.status = status
-        self.profile_picture_url = profile_picture_url
-        self.first_name = first_name
-        self.last_name = last_name
-
-
-class platformOrganizationVariables:
-    def __init__(self, name: str, status: status = None, members: list[str] = None):
-        self.name = name
-        self.status = status
-        self.members = members
-
-
-class clientPlatformUserVariables:
-    def __init__(self, id: str, email: str, name: str = None, status: status = None, profile_picture_url: str = None, first_name: str = None, last_name: str = None):
-        self.id = id
-        self.email = email
-        self.name = name
-        self.status = status
-        self.profile_picture_url = profile_picture_url
-        self.first_name = first_name
-        self.last_name = last_name
-
-
-class clientPlatformOrganizationVariables:
-    def __init__(self, id: str, name: str, status: status = None, members: list[str] = None):
-        self.id = id
-        self.name = name
-        self.status = status
-        self.members = members
 
 
 def toJson(obj):
@@ -63,7 +23,7 @@ class CordClient:
         self.app_id = app_id
         self.secret = secret
 
-    def sync_cord_user(self, user: clientPlatformUserVariables):
+    def sync_cord_user(self, user: PlatformUserVariables):
         auth_token: str = get_server_auth_token(self.app_id, self.secret)
         userId = user.id
         delattr(user, "id")
@@ -77,7 +37,7 @@ class CordClient:
 
         return response.json()
 
-    def sync_cord_organization(self, organization: clientPlatformOrganizationVariables):
+    def sync_cord_organization(self, organization: PlatformOrganizationVariables):
         auth_token: str = get_server_auth_token(self.app_id, self.secret)
         orgId = organization.id
         delattr(organization, "id")
@@ -91,7 +51,7 @@ class CordClient:
 
         return response.json()
 
-    def batch_sync_cord_users_and_organizations(self, users: list[clientPlatformUserVariables], organizations: list[platformOrganizationVariables]):
+    def batch_sync_cord_users_and_organizations(self, users: list[PlatformUserVariables], organizations: list[PlatformOrganizationVariables]):
         auth_token: str = get_server_auth_token(self.app_id, self.secret)
 
         headers = {
