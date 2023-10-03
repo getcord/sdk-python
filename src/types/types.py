@@ -14,7 +14,7 @@ class PlatformUserVariables:
         self.name = name
         self.shortName = short_name
         self.status = status
-        self.profilePictureUrl = profile_picture_url
+        self.profilePictureURL = profile_picture_url
         self.metadata = metadata
 
 
@@ -27,10 +27,12 @@ class PlatformOrganizationVariables:
 
 
 class ClientAuthTokenData:
-    def __init__(self, user_id: str, organization_id: str, user_details: PlatformUserVariables, organization_details: PlatformOrganizationVariables):
+    def __init__(self, user_id: str, organization_id: str, user_details: PlatformUserVariables = None, organization_details: PlatformOrganizationVariables = None):
         self.user_id = user_id
         self.organization_id = organization_id
         self.user_details = user_details
-        delattr(self.user_details.id)
+        if self.user_details and self.user_details.id:
+            delattr(self.user_details, 'id')
         self.organization_details = organization_details
-        delattr(self.organization_details.id)
+        if self.organization_details and self.organization_details.id:
+            delattr(self.organization_details, 'id')

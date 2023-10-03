@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import jwt
 
 
@@ -33,8 +33,8 @@ def get_client_auth_token(app_id: str, secret: str, payload: ClientAuthTokenData
     return jwt.encode(
         payload={
             "app_id": app_id,
-            "exp": datetime.datetime.now() + datetime.timedelta(minutes=1),
-            "iat": datetime.datetime.now(),
+            "exp": datetime.now() + timedelta(minutes=1),
+            "iat": datetime.now(),
             **payload
         },
         key=secret,
@@ -46,8 +46,8 @@ def get_server_auth_token(app_id: str, secret: str):
     return jwt.encode(
         payload={
             "app_id": app_id,
-            "exp": datetime.datetime.now() + datetime.timedelta(minutes=1),
-            "iat": datetime.datetime.now()
+            "exp": datetime.now() + timedelta(minutes=1),
+            "iat": datetime.now()
         },
         key=secret,
         algorithm='HS512'
@@ -58,8 +58,8 @@ def get_application_management_auth_token(customer_id: str, customer_secret: str
     return jwt.encode(
         payload={
             "customer_id": customer_id,
-            "exp": datetime.datetime.now() + datetime.timedelta(minutes=1),
-            "iat": datetime.datetime.now()
+            "exp": datetime.now() + timedelta(minutes=1),
+            "iat": datetime.now()
         },
         key=customer_secret,
         algorithm='HS512'
