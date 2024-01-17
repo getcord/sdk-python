@@ -40,10 +40,10 @@ class TestStringMethods(unittest.TestCase):
 
     def test_client_auth_token(self):
         user_id = '1'
-        organization_id = '1'
+        group_id = '1'
         email = 'dummy@cord.com'
         name = 'Mr. Dummy'
-        org_name = "Cord"
+        group_name = "Cord"
         short_name = 'dumdum'
         status = 'active'
         profile_picture_url = 'https://www.someurl.com'
@@ -54,7 +54,7 @@ class TestStringMethods(unittest.TestCase):
             dummy_app_secret,
             {
                 "user_id": user_id,
-                "organization_id": organization_id,
+                "group_id": group_id,
                 "user_details": {
                     "email": email,
                     "name": name,
@@ -63,14 +63,14 @@ class TestStringMethods(unittest.TestCase):
                     "profilePictureURL": profile_picture_url,
                     "metadata": metadata
                 },
-                "organization_details": {
-                    "name": org_name,
+                "group_details": {
+                    "name": group_name,
                     "status": status,
                     "members": [user_id]
                 }
             })
 
-        correct_token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiIxMjM0NTY3ODkiLCJleHAiOjE2OTYzMzAyNjgsImlhdCI6MTY5NjMzMDIwOCwidXNlcl9pZCI6IjEiLCJvcmdhbml6YXRpb25faWQiOiIxIiwidXNlcl9kZXRhaWxzIjp7ImVtYWlsIjoiZHVtbXlAY29yZC5jb20iLCJuYW1lIjoiTXIuIER1bW15Iiwic2hvcnROYW1lIjoiZHVtZHVtIiwic3RhdHVzIjoiYWN0aXZlIiwicHJvZmlsZVBpY3R1cmVVUkwiOiJodHRwczovL3d3dy5zb21ldXJsLmNvbSIsIm1ldGFkYXRhIjp7InJhbmRvbSI6ImhlbGxvIn19LCJvcmdhbml6YXRpb25fZGV0YWlscyI6eyJuYW1lIjoiQ29yZCIsInN0YXR1cyI6ImFjdGl2ZSIsIm1lbWJlcnMiOlsiMSJdfX0.QVDL1FS_mhZipUDcXJuammRF694rmV6kg0C-mZZIVTeRN9LLxo18-04McpwAW7iLYsgAC98N8uNix8OneB01Yw'
+        correct_token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiIxMjM0NTY3ODkiLCJleHAiOjE3MDU0ODcxNzUsImlhdCI6MTcwNTQ4NzExNSwidXNlcl9pZCI6IjEiLCJncm91cF9pZCI6IjEiLCJ1c2VyX2RldGFpbHMiOnsiZW1haWwiOiJkdW1teUBjb3JkLmNvbSIsIm5hbWUiOiJNci4gRHVtbXkiLCJzaG9ydE5hbWUiOiJkdW1kdW0iLCJzdGF0dXMiOiJhY3RpdmUiLCJwcm9maWxlUGljdHVyZVVSTCI6Imh0dHBzOi8vd3d3LnNvbWV1cmwuY29tIiwibWV0YWRhdGEiOnsicmFuZG9tIjoiaGVsbG8ifX0sImdyb3VwX2RldGFpbHMiOnsibmFtZSI6IkNvcmQiLCJzdGF0dXMiOiJhY3RpdmUiLCJtZW1iZXJzIjpbIjEiXX19.3CHm9fxtW1b5XQ2pVNgRl2a7ePI9ffIgaVd2Ck8Vtq9s4OZHDbvvnwr_TkKWcZpokIBmguOOzA5CniexzIiaVw'
 
         self.assertEqual(token, correct_token)
         encoded_payload = token.split('.')[1]
