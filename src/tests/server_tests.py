@@ -40,6 +40,60 @@ class TestStringMethods(unittest.TestCase):
 
     def test_client_auth_token(self):
         user_id = '1'
+        group_id = '1'
+        email = 'dummy@cord.com'
+        name = 'Mr. Dummy'
+        group_name = "Cord"
+        short_name = 'dumdum'
+        status = 'active'
+        profile_picture_url = 'https://www.someurl.com'
+        metadata = {"random": "hello"}
+
+        token = get_client_auth_token(
+            dummy_app_id,
+            dummy_app_secret,
+            {
+                "user_id": user_id,
+                "group_id": group_id,
+                "user_details": {
+                    "email": email,
+                    "name": name,
+                    "shortName": short_name,
+                    "status": status,
+                    "profilePictureURL": profile_picture_url,
+                    "metadata": metadata
+                },
+                "group_details": {
+                    "name": group_name,
+                    "status": status,
+                    "members": [user_id]
+                }
+            })
+
+        correct_token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiIxMjM0NTY3ODkiLCJleHAiOjE3MDU0ODcxNzUsImlhdCI6MTcwNTQ4NzExNSwidXNlcl9pZCI6IjEiLCJncm91cF9pZCI6IjEiLCJ1c2VyX2RldGFpbHMiOnsiZW1haWwiOiJkdW1teUBjb3JkLmNvbSIsIm5hbWUiOiJNci4gRHVtbXkiLCJzaG9ydE5hbWUiOiJkdW1kdW0iLCJzdGF0dXMiOiJhY3RpdmUiLCJwcm9maWxlUGljdHVyZVVSTCI6Imh0dHBzOi8vd3d3LnNvbWV1cmwuY29tIiwibWV0YWRhdGEiOnsicmFuZG9tIjoiaGVsbG8ifX0sImdyb3VwX2RldGFpbHMiOnsibmFtZSI6IkNvcmQiLCJzdGF0dXMiOiJhY3RpdmUiLCJtZW1iZXJzIjpbIjEiXX19.3CHm9fxtW1b5XQ2pVNgRl2a7ePI9ffIgaVd2Ck8Vtq9s4OZHDbvvnwr_TkKWcZpokIBmguOOzA5CniexzIiaVw'
+        
+        self.assertEqual(token, correct_token)
+        encoded_payload = token.split('.')[1]
+        decoded_payload = base64.b64decode(
+            encoded_payload + '=')  # Need to pad the b64 payload
+        payload = json.loads(
+            decoded_payload.decode('utf8').replace("'", '"'))
+        self.assertEqual(dummy_app_id, payload["app_id"])
+        self.assertEqual(user_id, payload["user_id"])
+        self.assertEqual(group_id, payload["group_id"])
+        self.assertEqual(email, payload["user_details"]['email'])
+        self.assertEqual(name, payload["user_details"]['name'])
+        self.assertEqual(short_name, payload["user_details"]['shortName'])
+        self.assertEqual(status, payload["user_details"]['status'])
+        self.assertEqual(profile_picture_url,
+                         payload["user_details"]['profilePictureURL'])
+        self.assertEqual(metadata, payload["user_details"]['metadata'])
+        self.assertEqual(group_name, payload["group_details"]['name'])
+        self.assertEqual(status, payload["group_details"]['status'])
+        self.assertEqual([user_id], payload["group_details"]['members'])
+
+    def test_client_auth_token_with_deprecated_params(self):
+        user_id = '1'
         organization_id = '1'
         email = 'dummy@cord.com'
         name = 'Mr. Dummy'
