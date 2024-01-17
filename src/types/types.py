@@ -1,6 +1,7 @@
 from enum import Enum
 import json
 import warnings
+from typing import Union, Dict
 
 
 class Status(Enum):
@@ -9,7 +10,30 @@ class Status(Enum):
 
 
 class PlatformUserVariables:
-    def __init__(self, id: str, email: str, name: str = None, short_name: str = None, status: Status = None, profile_picture_url: str = None, metadata: json = {}):
+    """
+    https://docs.cord.com/rest-apis/users/
+
+    Parameters
+    ----------
+    id : str
+        The ID for the user
+    email : str, default None
+        Email address of the user
+    name : str, default None
+        Full user name
+    short_name : str, default None
+        Short user name. In most cases, this will be preferred over name when set.
+    status : Union[str, Literal['active', 'deleted']]
+    profilePictureURL : str, default None
+        This must be a valid URL, which means it needs to follow the usual URL
+        formatting and encoding rules. For example, any space character will need
+        to be encoded as `%20`. We recommend using your programming language's
+        standard URL encoding function, such as `encodeURI` in Javascript.
+    metadata: Dict[str, Union[str, int, bool]] , default None
+        Arbitrary key-value pairs that can be used to store additional information.
+
+    """
+    def __init__(self, id: str, email: str = None, name: str = None, short_name: str = None, status: Status = None, profile_picture_url: str = None, metadata: json = {}):
         self.id = id
         self.email = email
         self.name = name
@@ -18,18 +42,6 @@ class PlatformUserVariables:
         self.profilePictureURL = profile_picture_url
         self.metadata = metadata
 
-
-class PlatformOrganizationVariables:
-    """
-        Deprecated - please use PlatformGroupVariables instead
-    """
-    def __init__(self, id: str, name: str, status: Status = None, members: list[str] = None):
-        self.id = id
-        self.name = name
-        self.status = status
-        self.members = members
-
-
 class PlatformGroupVariables:
     def __init__(self, id: str, name: str, status: Status = None, members: list[str] = None):
         self.id = id
@@ -37,7 +49,11 @@ class PlatformGroupVariables:
         self.status = status
         self.members = members
 
-
+class PlatformOrganizationVariables(PlatformGroupVariables):
+    """
+    Deprecated - please use PlatformGroupVariables instead
+    """
+ 
 class ClientAuthTokenData:
     """
     https://docs.cord.com/reference/authentication/
