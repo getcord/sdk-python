@@ -72,7 +72,7 @@ class ClientAuthTokenData:
         same fields as the [user management REST endpoint](https://docs.cord.com/rest-apis/users/)
     organization_details : PlatformOrganizationVariables, default None
         Deprecated, use group_details instead
-    group_details : PlatformOrganizationVariables, default None
+    group_details : PlatformGroupVariables, default None
         If present, updates the group's details, or creates a group
         with those details if the group_id is new to Cord. This is an object
         that contains the same fields as the [group management REST endpoint](https://docs.cord.com/rest-apis/groups/)
